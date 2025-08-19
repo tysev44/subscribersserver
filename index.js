@@ -37,7 +37,7 @@ const uri = 'mongodb+srv://tysev8301:0S3Ue0XGrXMqJeH7@cluster0.4shv1eu.mongodb.n
 
 // Connect to MongoDB
 mongoose
-  .connect(uri, options)
+  .connect(uri)
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
   });
@@ -187,6 +187,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
