@@ -29,9 +29,38 @@ app.use(cookieParser());
 
 app.set('trust proxy', 1);
 
-mongoose.connect('mongodb://127.0.0.1:27017/subscribe', {})
-.then(() => console.log("MongoDB connected"))
-.catch((err) => console.error("MongoDB connection error:", err));
+const uri = 'mongodb+srv://tysev8301:0S3Ue0XGrXMqJeH7@cluster0.4shv1eu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+// mongoose.connect('mongodb://127.0.0.1:27017/subscribe', {})
+// .then(() => console.log("MongoDB connected"))
+// .catch((err) => console.error("MongoDB connection error:", err));
+
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  maxPoolSize: 200, // Adjust connection pool size as needed
+};
+
+// Connect to MongoDB
+mongoose
+  .connect(uri, options)
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
+
+// Listen for successful connection
+mongoose.connection.once('open', () => {
+  console.log('Connected to MongoDB');
+});
+
+// Optional: Additional event listeners for connection management
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('MongoDB connection disconnected');
+});
 
 const subscribeSchema = new mongoose.Schema({
     email: String,
@@ -164,6 +193,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
