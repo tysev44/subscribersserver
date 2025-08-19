@@ -29,7 +29,7 @@ app.use(cookieParser());
 
 app.set('trust proxy', 1);
 
-const uri = 'mongodb+srv://tysev8301:0S3Ue0XGrXMqJeH7@cluster0.4shv1eu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+const uri = 'mongodb+srv://tysev8301:0S3Ue0XGrXMqJeH7@cluster0.4shv1eu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 // mongoose.connect('mongodb://127.0.0.1:27017/subscribe', {})
 // .then(() => console.log("MongoDB connected"))
@@ -210,6 +210,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
