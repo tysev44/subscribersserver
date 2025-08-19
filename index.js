@@ -17,7 +17,7 @@ const validator = require('validator');
 
 const app = express();
 const corsOptions = {
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://subscribers-ruddy.vercel.app"],
     methods: ['GET', 'POST'],
     credentials: true,
 };
@@ -194,6 +194,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
