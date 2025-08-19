@@ -38,6 +38,7 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverSelectionTimeoutMS: 5000,
+  maxPoolSize: 200,
   ssl: true,               // ensure SSL is used
   tlsAllowInvalidCertificates: false, // set true only for testing
 };
@@ -193,6 +194,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
