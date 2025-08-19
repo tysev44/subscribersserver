@@ -29,11 +29,28 @@ app.use(cookieParser());
 
 app.set('trust proxy', 1);
 
-const uri = 'mongodb+srv://tysev8301:0S3Ue0XGrXMqJeH7@cluster0.4shv1eu.mongodb.net/subscriber?retryWrites=true&w=majority
+const uri = 'mongodb+srv://tysev8301:0S3Ue0XGrXMqJeH7@cluster0.4shv1eu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 
 // mongoose.connect('mongodb://127.0.0.1:27017/subscribe', {})
 // .then(() => console.log("MongoDB connected"))
 // .catch((err) => console.error("MongoDB connection error:", err));
+let store;
+
+try {
+  // Initialize MongoStore with error handling
+  store = new MongoStore({
+    uri: uri, // Updated URI to avoid IPv6
+    collectionName: 'rateLimit', // Collection for storing rate limit data
+    expireTimeMs: 15 * 60 * 1000, // Expiration time for each entry
+    userKey: (req) => req.ip, // Use IP address as the identifier
+  });
+
+  // Optional: Add an error listener for runtime errors console.log('MongoStore initialized successfully.');
+} catch (error) {
+    console.error('Failed to initialize MongoStore:', error.message);
+    // Exit the process or use a fallback
+    process.exit(1);
+  }
 
 const options = {
   useNewUrlParser: true,
@@ -193,6 +210,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
