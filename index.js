@@ -111,6 +111,9 @@ app.post('/subscribe', async (req, res) => {
             }
              
             /////////INVALID NAME RESPONSE\\\\\\\\\\\
+            if (testName?.length < 4) {
+                return res.json({status:'error', message:'Invalid Name Input'});
+            }
             if (rules?.hasNumber || rules?.hasSpecial) {
                 return res.json({status:'error', message:'Invalid Name Input'});
             }
@@ -199,6 +202,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
