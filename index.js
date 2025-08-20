@@ -130,7 +130,7 @@ app.post('/subscribe', async (req, res) => {
             }
             /////////VALIDATE EMAIL\\\\\\\\\\\
             const isValidEmail = (email) => {
-                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                const regex = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
                 return regex.test(email)
             };
             
@@ -205,6 +205,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
