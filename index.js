@@ -93,19 +93,13 @@ app.post('/preloader', async (req, res) => {
 app.post('/subscribe', async (req, res) => {
     const emailed = req.body.email
     const name = req.body.name;
-    if(!name){
-        return res.json({status:'error', message:'Name field can not be empty'});
-    }
     
-    if(!emailed){
-        return res.json({status:'error', message:'Email field can not be empty'});
-    }
-    
-    if (emailed && name) {
         try {
             /////////REMOVING SPACE FROM NAME IN ORDER TO VALIDATE INPUT\\\\\\\\\\\
             const testName = name?.replace(/\s+/g,'')
-
+            if(!name){
+               return res.json({status:'error', message:'Name field can not be empty'});
+            }
             /////////NAME VALIDATIONS\\\\\\\\\\\
             const rules={
                 hasNumber : /\d/.test(testName),
@@ -116,15 +110,20 @@ app.post('/subscribe', async (req, res) => {
             if (testName?.length < 3) {
                 return res.json({status:'error', message:'Invalid Name Input. Name must be Above 2 letters'});
             }
-            if (rules?.hasNumber || rules?.hasSpecial) {
-                return res.json({status:'error', message:'Invalid Name Input'});
+            if (rules?.hasNumber) {
+                return res.json({status:'error', message:'Invalid Name Input Number not supported.'});
+            }
+            if (rules?.hasSpecial) {
+                return res.json({status:'error', message:'Invalid Name Input Special Characters not supported'});
             }
              
             /////////NAME CHARACTER LIMIT RESPONSE\\\\\\\\\\\
             if (testName?.length > 100) {
                 return res.json({status:'error', message:'Name Input Must be less than 100 letters'});
             }
-            
+            if(!emailed){
+             return res.json({status:'error', message:'Email field can not be empty'});
+            }
             /////////VALIDATE EMAIL\\\\\\\\\\\
             const isValidEmail = (email) => {
                 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -160,9 +159,7 @@ app.post('/subscribe', async (req, res) => {
             console.error('MongoDB error:', err);
             res.status(500).json({ error: 'Database error' });
         }
-    } else {
-        res.json({ status: 'offline' });
-    }
+    
 });
 
 app.post('/surveys', async (req, res) => {
@@ -204,6 +201,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
