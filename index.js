@@ -93,12 +93,14 @@ app.post('/preloader', async (req, res) => {
 app.post('/subscribe', async (req, res) => {
     const emailed = req.body.email
     const name = req.body.name;
-    if(!emailed){
-        return res.json({status:'error', message:'Email field can not be empty'});
-    }
     if(!name){
         return res.json({status:'error', message:'Name field can not be empty'});
     }
+    
+    if(!emailed){
+        return res.json({status:'error', message:'Email field can not be empty'});
+    }
+    
     if (emailed && name) {
         try {
             /////////REMOVING SPACE FROM NAME IN ORDER TO VALIDATE INPUT\\\\\\\\\\\
@@ -202,6 +204,7 @@ app.post('/surveys', async (req, res) => {
 app.listen(4000, '0.0.0.0', () => {
     console.log('Server running on port 4000');
 });
+
 
 
 
